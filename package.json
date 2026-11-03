@@ -25,7 +25,7 @@
     "typer": "cds-typer \"*\" --outputDirectory @cds-models",
     "typecheck": "tsc --noEmit",
     "lint": "biome check srv test",
-    "format": "biome format --write srv test",
+    "format": "biome check --write srv test",
     "test": "vitest run",
     "build": "cds build --production",
     "bind:hybrid": "cds bind db -2 enterprise-app-db --for hybrid && cds bind auth -2 enterprise-app-auth --for hybrid && cds bind destination -2 enterprise-app-destination --for hybrid",

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "types": ["node", "@cap-js/cds-types"],
+    "types": ["node", "@cap-js/cds-types", "vitest/globals"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
