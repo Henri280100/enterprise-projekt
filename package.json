@@ -38,15 +38,43 @@
   "cds": {
     "requires": {
       "db": {
-        "kind": "sqlite"
+        "kind": "hana"
       },
       "auth": {
         "kind": "xsuaa"
       },
-      "destinations": true,
       "[development]": {
         "db": {
-          "kind": "sqlite"
+          "kind": "sqlite",
+          "credentials": {
+            "url": ":memory:"
+          }
+        },
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "alice": {
+              "roles": [
+                "Employee",
+                "Admin"
+              ]
+            },
+            "bob": {
+              "roles": [
+                "MMUser",
+                "SDUser",
+                "FIUser"
+              ]
+            }
+          }
+        }
+      },
+      "[test]": {
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": ":memory:"
+          }
         },
         "auth": {
           "kind": "mocked",
@@ -67,9 +95,6 @@
           }
         }
       }
-    },
-    "typer": {
-      "outputDirectory": "@cds-models"
     }
   }
 }
