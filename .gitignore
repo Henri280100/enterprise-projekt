@@ -1,0 +1,11 @@
+node_modules/
+gen/
+mta_archives/
+@cds-models/
+srv/generated/
+.cdsrc-private.json
+.env
+*.sqlite
+db.sqlite
+test/http/*.private.http
+.DS_Store

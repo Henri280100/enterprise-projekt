@@ -1,0 +1,78 @@
+_schema-version: "3.3"
+ID: enterprise-app
+version: 1.0.0
+
+parameters:
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds-typer "*" --outputDirectory @cds-models
+        - npx cds build --production
+
+modules:
+  - name: enterprise-app-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 256M
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: enterprise-app-db
+      - name: enterprise-app-auth
+      - name: enterprise-app-destination
+
+  - name: enterprise-app-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: enterprise-app-db
+
+  - name: enterprise-app
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      memory: 256M
+      keep-existing-routes: true
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: enterprise-app-auth
+
+resources:
+  - name: enterprise-app-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+
+  - name: enterprise-app-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: enterprise-app-${org}-${space}
+        tenant-mode: dedicated
+
+  - name: enterprise-app-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite

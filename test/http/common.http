@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:4004
+
+### Ping
+GET {{baseUrl}}/common/ping()
+Authorization: Basic alice:
+
+### Statuses
+GET {{baseUrl}}/common/Statuses
+Authorization: Basic alice:
+
+### Không có auth phải trả 401
+GET {{baseUrl}}/common/Statuses

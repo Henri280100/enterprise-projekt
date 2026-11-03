@@ -1,0 +1,38 @@
+{
+  "xsappname": "enterprise-app",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    { "name": "$XSAPPNAME.Employee", "description": "Employee" },
+    { "name": "$XSAPPNAME.MMUser", "description": "Materials Management user" },
+    {
+      "name": "$XSAPPNAME.SDUser",
+      "description": "Sales and Distribution user"
+    },
+    { "name": "$XSAPPNAME.FIUser", "description": "Financial Accounting user" },
+    { "name": "$XSAPPNAME.Approver", "description": "BPA approval callback" },
+    { "name": "$XSAPPNAME.Admin", "description": "Administrator" }
+  ],
+  "role-templates": [
+    { "name": "Employee", "scope-references": ["$XSAPPNAME.Employee"] },
+    { "name": "MMUser", "scope-references": ["$XSAPPNAME.MMUser"] },
+    { "name": "SDUser", "scope-references": ["$XSAPPNAME.SDUser"] },
+    { "name": "FIUser", "scope-references": ["$XSAPPNAME.FIUser"] },
+    { "name": "Approver", "scope-references": ["$XSAPPNAME.Approver"] },
+    { "name": "Admin", "scope-references": ["$XSAPPNAME.Admin"] }
+  ],
+  "role-collections": [
+    {
+      "name": "EnterpriseApp_Admin",
+      "role-template-references": [
+        "$XSAPPNAME.Admin",
+        "$XSAPPNAME.Employee",
+        "$XSAPPNAME.MMUser",
+        "$XSAPPNAME.SDUser",
+        "$XSAPPNAME.FIUser"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": ["https://*.cfapps.us10-001.hana.ondemand.com/**"]
+  }
+}

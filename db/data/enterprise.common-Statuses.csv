@@ -1,0 +1,9 @@
+code,name
+NEW,New
+SUBMITTED,Submitted
+PENDING_APPROVAL,Pending Approval
+APPROVED,Approved
+REJECTED,Rejected
+POSTED,Posted
+FAILED,Failed
+CANCELLED,Cancelled
