@@ -20,6 +20,7 @@ modules:
     parameters:
       buildpack: nodejs_buildpack
       memory: 256M
+      instances: 1
     build-parameters:
       builder: npm
     provides:
@@ -45,6 +46,7 @@ modules:
     parameters:
       memory: 256M
       keep-existing-routes: true
+      disk-quota: 256M
     requires:
       - name: srv-api
         group: destinations
@@ -53,6 +55,11 @@ modules:
           url: ~{srv-url}
           forwardAuthToken: true
       - name: enterprise-app-auth
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
 
 resources:
   - name: enterprise-app-db
@@ -70,9 +77,15 @@ resources:
       config:
         xsappname: enterprise-app-${org}-${space}
         tenant-mode: dedicated
+        oauth2-configuration:
+          redirect-uris:
+            - https://*~{app-api/app-uri}/**
+    requires:
+      - name: app-api
 
   - name: enterprise-app-destination
     type: org.cloudfoundry.managed-service
     parameters:
       service: destination
       service-plan: lite
+description: "A simple CAP project."

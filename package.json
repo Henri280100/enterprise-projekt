@@ -20,6 +20,7 @@
     "vitest": "^5.0.5"
   },
   "scripts": {
+    "start": "cds-serve",
     "watch": "cds-tsx watch",
     "watch:hybrid": "cds-tsx watch --profile hybrid",
     "typer": "cds-typer \"*\" --outputDirectory @cds-models",
@@ -29,7 +30,7 @@
     "test": "vitest run",
     "build": "cds build --production",
     "bind:hybrid": "cds bind db -2 enterprise-app-db --for hybrid && cds bind auth -2 enterprise-app-auth --for hybrid && cds bind destination -2 enterprise-app-destination --for hybrid",
-    "deploy": "mbt build && cf deploy mta_archives/enterprise-app_1.0.0.mtar"
+    "deploy": "mbt build && cf deploy mta_archives/enterprise-app_1.0.0.mtar --retries 1"
   },
   "private": true,
   "imports": {
