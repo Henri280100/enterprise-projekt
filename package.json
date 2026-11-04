@@ -4,6 +4,8 @@
   "type": "module",
   "dependencies": {
     "@cap-js/hana": "^3.1.2",
+    "@sap-cloud-sdk/connectivity": "^4.9.1",
+    "@sap-cloud-sdk/http-client": "^4.9.1",
     "@sap/cds": "^10",
     "@sap/xssec": "^4.16.0"
   },
@@ -14,6 +16,7 @@
     "@cap-js/cds-types": "^0.18.0",
     "@cap-js/sqlite": "^3.1.2",
     "@sap/cds-dk": "^10",
+    "@sapui5/types": "^1.154.0",
     "@types/node": "^24.0.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
@@ -27,7 +30,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome check srv test",
     "format": "biome check --write srv test",
-    "test": "vitest run",
+    "test": "NODE_OPTIONS='--import tsx' vitest run",
     "build": "cds build --production",
     "bind:hybrid": "cds bind db -2 enterprise-app-db --for hybrid && cds bind auth -2 enterprise-app-auth --for hybrid && cds bind destination -2 enterprise-app-destination --for hybrid",
     "deploy": "mbt build && cf deploy mta_archives/enterprise-app_1.0.0.mtar --retries 1"
@@ -44,12 +47,18 @@
       "auth": {
         "kind": "xsuaa"
       },
+      "bpa": {
+        "impl": "srv/integrations/bpa/BpaService"
+      },
       "[development]": {
         "db": {
           "kind": "sqlite",
           "credentials": {
             "url": ":memory:"
           }
+        },
+        "bpa": {
+          "impl": "srv/integrations/bpa/BpaMockService"
         },
         "auth": {
           "kind": "mocked",
@@ -65,6 +74,11 @@
                 "MMUser",
                 "SDUser",
                 "FIUser"
+              ]
+            },
+            "bpa": {
+              "roles": [
+                "Approver"
               ]
             }
           }
@@ -77,6 +91,9 @@
             "url": ":memory:"
           }
         },
+        "bpa": {
+          "impl": "srv/integrations/bpa/BpaMockService"
+        },
         "auth": {
           "kind": "mocked",
           "users": {
@@ -91,6 +108,11 @@
                 "MMUser",
                 "SDUser",
                 "FIUser"
+              ]
+            },
+            "bpa": {
+              "roles": [
+                "Approver"
               ]
             }
           }

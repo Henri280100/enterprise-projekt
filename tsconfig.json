@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "types": ["node", "@cap-js/cds-types", "vitest/globals"],
+    "types": ["node", "@cap-js/cds-types", "vitest/globals", "@sapui5/types"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
@@ -12,7 +12,7 @@
     "allowJs": true,
     "paths": {
       "@sap/cds": ["./node_modules/@cap-js/cds-types"],
-      "#cds-models/*": ["./@cds-models/*/index.ts"]
+      "#cds-models/*": ["./@cds-models/*"]
     }
   },
   "include": ["srv", "test", "@cds-models"]

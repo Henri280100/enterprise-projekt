@@ -4,9 +4,12 @@ using {
     cuid,
     managed
 } from '@sap/cds/common';
+using {enterprise.common.Statuses} from './code-lists';
 
 aspect BusinessObject : cuid, managed {
-    status        : String(30) default 'NEW';
+    status_code   : String(30) default 'NEW';
+    status        : Association to Statuses
+                        on status.code = status_code;
     correlationId : String(100);
     errorMessage  : String(100)
 }

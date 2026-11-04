@@ -25,6 +25,10 @@
     {
       "name": "$XSAPPNAME.Admin",
       "description": "Administrator"
+    },
+    {
+      "name": "$XSAPPNAME.Approver",
+      "description": "Approver"
     }
   ],
   "role-templates": [
@@ -56,7 +60,9 @@
       "name": "Approver",
       "scope-references": [
         "$XSAPPNAME.Approver"
-      ]
+      ],
+      "description": "generated",
+      "attribute-references": []
     },
     {
       "name": "Admin",
@@ -82,5 +88,8 @@
       "https://*.cfapps.us10-001.hana.ondemand.com/**"
     ]
   },
+  "authorities": [
+    "$XSAPPNAME.Approver"
+  ],
   "attributes": []
 }
